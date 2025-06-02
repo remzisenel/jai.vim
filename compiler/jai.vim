@@ -32,14 +32,18 @@ function! FindJaiCompiler()
 	else
 		if has("win64") || has("win32") || has("win16")
 			return "jai.exe"
-		else
-			return "jai-linux"
-		endif
+        else 
+            if has("mac")
+                return "jai-macos"
+            else
+                return "jai-linux"
+            endif
+        endif
 	endif
 endfunction
 
 function! GetJaiMakeprg()
-    return FindJaiCompiler() . " -no_color -quiet -x64 " . FindJaiEntrypoint(expand('%'))
+    return FindJaiCompiler() . " -no_color -quiet " . FindJaiEntrypoint(expand('%'))
 endfunction
 
 function! UpdateJaiMakeprg()
